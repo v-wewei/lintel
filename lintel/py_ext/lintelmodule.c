@@ -395,6 +395,10 @@ loadvid(PyObject *UNUSED(dummy), PyObject *args, PyObject *kw)
         bool is_size_dynamic = get_vid_width_height(&width,
                                                     &height,
                                                     vid_ctx.codec_context);
+        if(num_frames == 0){
+            num_frames = vid_ctx.nb_frames;
+            should_random_seek = false;
+        }
 
         PyByteArrayObject *frames = alloc_pyarray(num_frames*width*height*3);
         if (PyErr_Occurred() || (frames == NULL))
